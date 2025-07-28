@@ -220,48 +220,27 @@ src/
 - Environment-based configuration
 - Logging configuration
 
-## Production Deployment
+## Running the Application
 
-The application is now production-ready with comprehensive security and monitoring features.
+### Prerequisites
+- Java 17 or higher
+- Maven 3.6 or higher
+- MySQL 8.0 or higher
 
-### ✅ Production Features
-- **Environment Variables**: All sensitive configuration uses environment variables
-- **Security Hardening**: CSRF protection, secure cookies, proper logging
-- **Error Handling**: Global exception handler with custom error pages
-- **Monitoring**: Spring Boot Actuator with health checks and metrics
-- **Containerization**: Docker and Docker Compose support
-- **Database Security**: SSL connections, connection pooling, proper validation
-
-### 🚀 Quick Production Deployment
-
-1. **Using Docker Compose (Recommended):**
+### Local Development
+1. **Start MySQL** and create a database
+2. **Configure email settings** in `application.properties`
+3. **Run the application:**
    ```bash
-   # Configure environment variables in docker-compose.yml
-   docker-compose up -d
+   mvn spring-boot:run
    ```
+4. **Access the application** at `http://localhost:8080`
 
-2. **Traditional Deployment:**
-   ```bash
-   # Set environment variables
-   export SPRING_PROFILES_ACTIVE=prod
-   export DATABASE_URL=your_production_db_url
-   export DATABASE_PASSWORD=your_secure_password
-   
-   # Build and run
-   mvn clean package -DskipTests
-   java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar
-   ```
-
-### 📋 Production Checklist
-- [ ] Set all environment variables
-- [ ] Configure production database
-- [ ] Set up SSL/HTTPS
-- [ ] Configure email settings
-- [ ] Set up monitoring and logging
-- [ ] Test backup and recovery procedures
-
-### 📚 Detailed Documentation
-See [PRODUCTION_DEPLOYMENT.md](PRODUCTION_DEPLOYMENT.md) for comprehensive production deployment guide.
+### Building for Production
+```bash
+mvn clean package -DskipTests
+java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar
+```
 
 ## API Endpoints
 

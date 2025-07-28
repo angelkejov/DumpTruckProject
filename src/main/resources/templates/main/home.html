@@ -58,11 +58,16 @@
             <!-- Hero Section -->
             <section class="hero">
                 <div class="hero-content">
-                    <h1 class="hero-title">Professional Dump Truck Services</h1>
-                    <p class="hero-subtitle">Reliable transportation solutions with small trucks up to 3.5 tons</p>
+                    <div class="hero-badge">
+                        <span class="badge-number">1</span>
+                        <span class="badge-text">Топ услуга</span>
+                    </div>
+                    <h1 class="hero-title">ТРАНСПОРТ ГРУП 25 ООД</h1>
+                    <p class="hero-subtitle">Транспортни услуги със самосвал до 3.5 т</p>
+                    <p class="hero-motto">Качество и отговорност</p>
                     <div class="hero-actions">
-                        <a th:href="@{/register}" class="btn btn-primary">Get Started</a>
-                        <a th:href="@{/contact}" class="btn btn-secondary">Contact Us</a>
+                        <a th:href="@{/register}" class="btn btn-primary">Поръчай сега</a>
+                        <a th:href="@{/contact}" class="btn btn-secondary">Свържете се</a>
                     </div>
                 </div>
             </section>
@@ -70,12 +75,12 @@
             <!-- About Section -->
             <section class="about-section">
                 <div class="section-header">
-                    <h2 class="section-title">Who We Are</h2>
+                    <h2 class="section-title">Кои сме ние</h2>
                 </div>
                 <div class="about-content">
                     <div class="about-text">
-                        <p>We are a specialized dump truck service company providing reliable transportation solutions for construction, landscaping, and waste management projects. Our fleet consists of small, maneuverable trucks with a capacity of up to 3.5 tons, making us perfect for projects in urban areas and tight spaces.</p>
-                        <p>With years of experience in the industry, we understand the unique challenges of material transportation and provide customized solutions to meet your specific needs.</p>
+                        <p>ТРАНСПОРТ ГРУП 25 ООД е специализирана компания за транспортни услуги, предоставяща надеждни решения за превоз на строителни материали, отпадъци и инертни материали. Нашият флот се състои от маневрени самосвали с капацитет до 3.5 тона, идеални за проекти в градски райони и тесни пространства.</p>
+                        <p>С години опит в индустрията, разбираме уникалните предизвикателства на материалния транспорт и предоставяме персонализирани решения за вашите специфични нужди.</p>
                     </div>
                 </div>
             </section>
@@ -83,28 +88,38 @@
             <!-- Services Section -->
             <section class="services-section">
                 <div class="section-header">
-                    <h2 class="section-title">What We Do</h2>
+                    <h2 class="section-title">Нашите услуги</h2>
                 </div>
                 <div class="services-grid">
                     <div class="service-card">
                         <div class="service-icon">🚛</div>
-                        <h3 class="service-title">Material Transport</h3>
-                        <p class="service-description">Efficient transportation of construction materials, soil, gravel, and other bulk materials to your project site.</p>
+                        <h3 class="service-title">Превоз на строителни отпадъци</h3>
+                        <p class="service-description">Извозване на строителни отпадъци, мебели и бяла техника до сметище.</p>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">🏗️</div>
-                        <h3 class="service-title">Construction Support</h3>
-                        <p class="service-description">Reliable support for construction projects with timely delivery and flexible scheduling options.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">🌱</div>
-                        <h3 class="service-title">Landscaping Services</h3>
-                        <p class="service-description">Transport of soil, mulch, and landscaping materials for residential and commercial projects.</p>
+                        <h3 class="service-title">Транспорт на инертни материали</h3>
+                        <p class="service-description">Превоз на чакъл, пясък, баластра, компост и други инертни материали.</p>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">♻️</div>
-                        <h3 class="service-title">Waste Removal</h3>
-                        <p class="service-description">Responsible disposal and transportation of construction waste and debris.</p>
+                        <h3 class="service-title">Извозване на метални отпадъци</h3>
+                        <p class="service-description">Извозване на метални отпадъци до специализирани бази.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">📦</div>
+                        <h3 class="service-title">Доставка на строителни материали</h3>
+                        <p class="service-description">Доставка на строителни материали, арматура, профили и дървен материал.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌿</div>
+                        <h3 class="service-title">Почистване и косене</h3>
+                        <p class="service-description">Почистване и косене на дворове и градински площи.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🔥</div>
+                        <h3 class="service-title">Доставка на пелети и въглища</h3>
+                        <p class="service-description">Доставка на пелети, въглища и други горива за отопление.</p>
                     </div>
                 </div>
             </section>
@@ -112,24 +127,24 @@
             <!-- Features Section -->
             <section class="features-section">
                 <div class="section-header">
-                    <h2 class="section-title">Why Choose Us</h2>
+                    <h2 class="section-title">Защо да изберете нас</h2>
                 </div>
                 <div class="features-grid">
                     <div class="feature-item">
-                        <h3 class="feature-title">Small & Maneuverable</h3>
-                        <p>Our trucks can access tight spaces and urban areas where larger vehicles cannot.</p>
+                        <h3 class="feature-title">Малки и маневрени</h3>
+                        <p>Нашите самосвали могат да достъпват тесни пространства и градски райони, където по-големите превозни средства не могат.</p>
                     </div>
                     <div class="feature-item">
-                        <h3 class="feature-title">Reliable Service</h3>
-                        <p>On-time delivery and professional service you can count on for your projects.</p>
+                        <h3 class="feature-title">Надеждна услуга</h3>
+                        <p>Навременна доставка и професионална услуга, на която можете да разчитате за вашите проекти.</p>
                     </div>
                     <div class="feature-item">
-                        <h3 class="feature-title">Flexible Scheduling</h3>
-                        <p>We work around your schedule to ensure minimal disruption to your operations.</p>
+                        <h3 class="feature-title">Гъвкаво планиране</h3>
+                        <p>Работим според вашия график, за да осигурим минимално нарушение на вашите операции.</p>
                     </div>
                     <div class="feature-item">
-                        <h3 class="feature-title">Experienced Team</h3>
-                        <p>Our drivers are experienced professionals who understand the importance of safe and efficient delivery.</p>
+                        <h3 class="feature-title">Опитен екип</h3>
+                        <p>Нашите шофьори са опитни професионалисти, които разбират важността на безопасна и ефективна доставка.</p>
                     </div>
                 </div>
             </section>
@@ -137,11 +152,11 @@
             <!-- CTA Section - Only show for non-authenticated users -->
             <section class="cta-section" sec:authorize="!isAuthenticated()">
                 <div class="cta-content">
-                    <h2 class="cta-title">Ready to Get Started?</h2>
-                    <p class="cta-text">Join our satisfied customers and experience the difference of professional dump truck services.</p>
+                    <h2 class="cta-title">Готови ли сте да започнем?</h2>
+                    <p class="cta-text">Присъединете се към нашите доволни клиенти и усетете разликата на професионалните транспортни услуги.</p>
                     <div class="cta-actions">
-                        <a th:href="@{/register}" class="btn btn-primary">Register Now</a>
-                        <a th:href="@{/contact}" class="btn btn-outline">Learn More</a>
+                        <a th:href="@{/register}" class="btn btn-primary">Регистрирайте се сега</a>
+                        <a th:href="@{/contact}" class="btn btn-outline">Научете повече</a>
                     </div>
                 </div>
             </section>
