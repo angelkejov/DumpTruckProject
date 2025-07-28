@@ -94,6 +94,29 @@ body {
     color: #dc2626;
 }
 
+.language-toggle {
+    background: linear-gradient(135deg, #f59e0b, #f97316);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 3rem;
+}
+
+.language-toggle:hover {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.3);
+}
+
+.lang-text {
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
 .logout-form {
     margin: 0;
 }
@@ -1126,6 +1149,12 @@ body {
     .features-grid,
     .contact-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .language-toggle {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: center;
     }
 }
 

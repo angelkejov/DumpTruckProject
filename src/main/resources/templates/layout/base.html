@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${title} ? ${title} + ' - Dump Truck Services' : 'Dump Truck Services'">Dump Truck Services</title>
+    <title th:text="${title} ? ${title} + ' - ТРАНСПОРТ ГРУП 25' : 'ТРАНСПОРТ ГРУП 25'">ТРАНСПОРТ ГРУП 25</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -13,32 +13,37 @@
             <div class="nav-container">
                 <div class="nav-brand">
                     <a th:href="@{/}" class="brand-link">
-                        <span class="brand-text">ТРАНСПОРТ ГРУП 25</span>
+                        <span class="brand-text" data-en="TRANSPORT GROUP 25" data-bg="ТРАНСПОРТ ГРУП 25">ТРАНСПОРТ ГРУП 25</span>
                     </a>
                 </div>
                 <ul class="nav-menu">
                     <li class="nav-item">
-                        <a th:href="@{/}" class="nav-link">Начало</a>
+                        <a th:href="@{/}" class="nav-link" data-en="Home" data-bg="Начало">Начало</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/order}" class="nav-link">Поръчка</a>
+                        <a th:href="@{/order}" class="nav-link" data-en="Order Service" data-bg="Поръчка">Поръчка</a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/contact}" class="nav-link">Контакти</a>
+                        <a th:href="@{/contact}" class="nav-link" data-en="Contact" data-bg="Контакти">Контакти</a>
                     </li>
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/login}" class="nav-link">Вход</a>
+                        <a th:href="@{/login}" class="nav-link" data-en="Login" data-bg="Вход">Вход</a>
                     </li>
                     <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a th:href="@{/register}" class="nav-link nav-link-primary">Регистрация</a>
+                        <a th:href="@{/register}" class="nav-link nav-link-primary" data-en="Register" data-bg="Регистрация">Регистрация</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/profile}" class="nav-link">Профил</a>
+                        <a th:href="@{/profile}" class="nav-link" data-en="Profile" data-bg="Профил">Профил</a>
                     </li>
                     <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post" class="logout-form">
-                            <button type="submit" class="nav-link nav-link-logout">Изход</button>
+                            <button type="submit" class="nav-link nav-link-logout" data-en="Logout" data-bg="Изход">Изход</button>
                         </form>
+                    </li>
+                    <li class="nav-item">
+                        <button class="nav-link language-toggle" onclick="toggleLanguage()">
+                            <span class="lang-text" data-en="BG" data-bg="EN">EN</span>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -67,36 +72,36 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-brand">
-                        <h3 class="footer-title">ТРАНСПОРТ ГРУП 25 ООД</h3>
-                        <p class="footer-subtitle">Транспортни услуги със самосвал до 3.5 т</p>
+                        <h3 class="footer-title" data-en="TRANSPORT GROUP 25 LTD" data-bg="ТРАНСПОРТ ГРУП 25 ООД">ТРАНСПОРТ ГРУП 25 ООД</h3>
+                        <p class="footer-subtitle" data-en="Transport services with dump truck up to 3.5 tons" data-bg="Транспортни услуги със самосвал до 3.5 т">Транспортни услуги със самосвал до 3.5 т</p>
                         <div class="footer-badge">
                             <span class="badge-number">1</span>
-                            <span class="badge-text">Топ услуга</span>
+                            <span class="badge-text" data-en="Top Service" data-bg="Топ услуга">Топ услуга</span>
                         </div>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h4 class="footer-heading">Нашите услуги</h4>
+                    <h4 class="footer-heading" data-en="Our Services" data-bg="Нашите услуги">Нашите услуги</h4>
                     <ul class="footer-services">
-                        <li>Превоз и извозване на строителни отпадъци</li>
-                        <li>Транспорт на инертни материали</li>
-                        <li>Извозване на метални отпадъци</li>
-                        <li>Доставка на строителни материали</li>
-                        <li>Почистване и косене на дворове</li>
-                        <li>Доставка на пелети и въглища</li>
-                        <li>Превоз на арматура и профили</li>
-                        <li>Дървен материал и палетни товари</li>
+                        <li data-en="Transport and removal of construction waste" data-bg="Превоз и извозване на строителни отпадъци">Превоз и извозване на строителни отпадъци</li>
+                        <li data-en="Transport of inert materials" data-bg="Транспорт на инертни материали">Транспорт на инертни материали</li>
+                        <li data-en="Removal of metal waste" data-bg="Извозване на метални отпадъци">Извозване на метални отпадъци</li>
+                        <li data-en="Delivery of construction materials" data-bg="Доставка на строителни материали">Доставка на строителни материали</li>
+                        <li data-en="Cleaning and mowing of yards" data-bg="Почистване и косене на дворове">Почистване и косене на дворове</li>
+                        <li data-en="Delivery of pellets and coal" data-bg="Доставка на пелети и въглища">Доставка на пелети и въглища</li>
+                        <li data-en="Transport of rebar and profiles" data-bg="Превоз на арматура и профили">Превоз на арматура и профили</li>
+                        <li data-en="Wood material and palletized goods" data-bg="Дървен материал и палетни товари">Дървен материал и палетни товари</li>
                     </ul>
                 </div>
                 
                 <div class="footer-section">
-                    <h4 class="footer-heading">Зона на обслужване</h4>
+                    <h4 class="footer-heading" data-en="Service Area" data-bg="Зона на обслужване">Зона на обслужване</h4>
                     <div class="service-area">
-                        <span class="area-badge">София - град и област София</span>
+                        <span class="area-badge" data-en="Sofia - city and Sofia region" data-bg="София - град и област София">София - град и област София</span>
                     </div>
                     
-                    <h4 class="footer-heading">Контакти</h4>
+                    <h4 class="footer-heading" data-en="Contacts" data-bg="Контакти">Контакти</h4>
                     <div class="contact-info">
                         <div class="contact-item">
                             <span class="contact-icon">📧</span>
@@ -115,31 +120,72 @@
                 
                 <div class="footer-section">
                     <div class="footer-motto">
-                        <h4 class="motto-text">Качество и отговорност</h4>
-                        <p class="motto-subtitle">Вашият надежден партньор за транспортни услуги</p>
+                        <h4 class="motto-text" data-en="Quality and Responsibility" data-bg="Качество и отговорност">Качество и отговорност</h4>
+                        <p class="motto-subtitle" data-en="Your reliable partner for transport services" data-bg="Вашият надежден партньор за транспортни услуги">Вашият надежден партньор за транспортни услуги</p>
                     </div>
                     
                     <div class="footer-stats">
                         <div class="stat-item">
                             <span class="stat-number">3.5т</span>
-                            <span class="stat-label">Капацитет</span>
+                            <span class="stat-label" data-en="Capacity" data-bg="Капацитет">Капацитет</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">24/7</span>
-                            <span class="stat-label">Достъпност</span>
+                            <span class="stat-label" data-en="Availability" data-bg="Достъпност">Достъпност</span>
                         </div>
                         <div class="stat-item">
                             <span class="stat-number">100%</span>
-                            <span class="stat-label">Доверие</span>
+                            <span class="stat-label" data-en="Trust" data-bg="Доверие">Доверие</span>
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2024 ТРАНСПОРТ ГРУП 25 ООД. Всички права запазени.</p>
+                <p data-en="© 2024 TRANSPORT GROUP 25 LTD. All rights reserved." data-bg="© 2024 ТРАНСПОРТ ГРУП 25 ООД. Всички права запазени.">© 2024 ТРАНСПОРТ ГРУП 25 ООД. Всички права запазени.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Language toggle functionality
+        let currentLanguage = localStorage.getItem('language') || 'bg';
+        
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'bg' ? 'en' : 'bg';
+            localStorage.setItem('language', currentLanguage);
+            updateLanguage();
+        }
+        
+        function updateLanguage() {
+            const elements = document.querySelectorAll('[data-en][data-bg]');
+            elements.forEach(element => {
+                if (currentLanguage === 'en') {
+                    element.textContent = element.getAttribute('data-en');
+                } else {
+                    element.textContent = element.getAttribute('data-bg');
+                }
+            });
+            
+            // Update language toggle button
+            const langText = document.querySelector('.lang-text');
+            if (langText) {
+                langText.textContent = currentLanguage === 'bg' ? 'EN' : 'BG';
+            }
+            
+            // Update page title
+            const title = document.title;
+            if (currentLanguage === 'en') {
+                document.title = title.replace('ТРАНСПОРТ ГРУП 25', 'TRANSPORT GROUP 25');
+            } else {
+                document.title = title.replace('TRANSPORT GROUP 25', 'ТРАНСПОРТ ГРУП 25');
+            }
+        }
+        
+        // Initialize language on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLanguage();
+        });
+    </script>
 </body>
 </html> 
