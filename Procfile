@@ -1,0 +1,1 @@
+web: java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar 
