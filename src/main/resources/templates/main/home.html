@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a th:href="@{/}" class="brand-link">
+                        <span class="brand-text">Dump Truck Services</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a th:href="@{/}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/order}" class="nav-link">Order Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/contact}" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/register}" class="nav-link nav-link-primary">Register</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/profile}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="logout-form">
+                            <button type="submit" class="nav-link nav-link-logout">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-error" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Professional Dump Truck Services</h1>
+                    <p class="hero-subtitle">Reliable transportation solutions with small trucks up to 3.5 tons</p>
+                    <div class="hero-actions">
+                        <a th:href="@{/register}" class="btn btn-primary">Get Started</a>
+                        <a th:href="@{/contact}" class="btn btn-secondary">Contact Us</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section class="about-section">
+                <div class="section-header">
+                    <h2 class="section-title">Who We Are</h2>
+                </div>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>We are a specialized dump truck service company providing reliable transportation solutions for construction, landscaping, and waste management projects. Our fleet consists of small, maneuverable trucks with a capacity of up to 3.5 tons, making us perfect for projects in urban areas and tight spaces.</p>
+                        <p>With years of experience in the industry, we understand the unique challenges of material transportation and provide customized solutions to meet your specific needs.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section class="services-section">
+                <div class="section-header">
+                    <h2 class="section-title">What We Do</h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">🚛</div>
+                        <h3 class="service-title">Material Transport</h3>
+                        <p class="service-description">Efficient transportation of construction materials, soil, gravel, and other bulk materials to your project site.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🏗️</div>
+                        <h3 class="service-title">Construction Support</h3>
+                        <p class="service-description">Reliable support for construction projects with timely delivery and flexible scheduling options.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">🌱</div>
+                        <h3 class="service-title">Landscaping Services</h3>
+                        <p class="service-description">Transport of soil, mulch, and landscaping materials for residential and commercial projects.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">♻️</div>
+                        <h3 class="service-title">Waste Removal</h3>
+                        <p class="service-description">Responsible disposal and transportation of construction waste and debris.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features-section">
+                <div class="section-header">
+                    <h2 class="section-title">Why Choose Us</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <h3 class="feature-title">Small & Maneuverable</h3>
+                        <p>Our trucks can access tight spaces and urban areas where larger vehicles cannot.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Reliable Service</h3>
+                        <p>On-time delivery and professional service you can count on for your projects.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Flexible Scheduling</h3>
+                        <p>We work around your schedule to ensure minimal disruption to your operations.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3 class="feature-title">Experienced Team</h3>
+                        <p>Our drivers are experienced professionals who understand the importance of safe and efficient delivery.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section - Only show for non-authenticated users -->
+            <section class="cta-section" sec:authorize="!isAuthenticated()">
+                <div class="cta-content">
+                    <h2 class="cta-title">Ready to Get Started?</h2>
+                    <p class="cta-text">Join our satisfied customers and experience the difference of professional dump truck services.</p>
+                    <div class="cta-actions">
+                        <a th:href="@{/register}" class="btn btn-primary">Register Now</a>
+                        <a th:href="@{/contact}" class="btn btn-outline">Learn More</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dump Truck Services. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

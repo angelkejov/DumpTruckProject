@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title} ? ${title} + ' - Dump Truck Services' : 'Dump Truck Services'">Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a th:href="@{/}" class="brand-link">
+                        <span class="brand-text">Dump Truck Services</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a th:href="@{/}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/order}" class="nav-link">Order Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/contact}" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/register}" class="nav-link nav-link-primary">Register</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/profile}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="logout-form">
+                            <button type="submit" class="nav-link nav-link-logout">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-error" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            
+            <!-- Page Content -->
+            <div th:replace="${content}">
+                <!-- Content will be replaced by child templates -->
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dump Truck Services. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

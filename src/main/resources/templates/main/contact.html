@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a th:href="@{/}" class="brand-link">
+                        <span class="brand-text">Dump Truck Services</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a th:href="@{/}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/order}" class="nav-link">Order Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/contact}" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/register}" class="nav-link nav-link-primary">Register</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/profile}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="logout-form">
+                            <button type="submit" class="nav-link nav-link-logout">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-error" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            
+            <!-- Contact Header -->
+            <section class="contact-header">
+                <div class="section-header">
+                    <h1 class="section-title">Contact Us</h1>
+                    <p class="section-subtitle">Get in touch with us for your dump truck service needs</p>
+                </div>
+            </section>
+
+            <!-- Contact Information -->
+            <section class="contact-section">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <h3 class="contact-title">Phone Numbers</h3>
+                        <div class="contact-info">
+                            <p><strong>Main Office:</strong> +1 (555) 123-4567</p>
+                            <p><strong>Dispatch:</strong> +1 (555) 123-4568</p>
+                            <p><strong>Emergency:</strong> +1 (555) 123-4569</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <h3 class="contact-title">Email Addresses</h3>
+                        <div class="contact-info">
+                            <p><strong>General Inquiries:</strong> info@dumptruckservices.com</p>
+                            <p><strong>Service Requests:</strong> service@dumptruckservices.com</p>
+                            <p><strong>Support:</strong> support@dumptruckservices.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <h3 class="contact-title">Office Address</h3>
+                        <div class="contact-info">
+                            <p><strong>Main Office:</strong></p>
+                            <p>123 Construction Drive<br>
+                            Industrial District<br>
+                            City, State 12345<br>
+                            United States</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-icon">🕒</div>
+                        <h3 class="contact-title">Business Hours</h3>
+                        <div class="contact-info">
+                            <p><strong>Monday - Friday:</strong> 7:00 AM - 6:00 PM</p>
+                            <p><strong>Saturday:</strong> 8:00 AM - 4:00 PM</p>
+                            <p><strong>Sunday:</strong> Closed</p>
+                            <p><strong>Emergency Service:</strong> 24/7 Available</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Service Areas -->
+            <section class="service-areas-section">
+                <div class="section-header">
+                    <h2 class="section-title">Service Areas</h2>
+                </div>
+                <div class="service-areas-content">
+                    <p>We provide dump truck services in the following areas:</p>
+                    <ul class="areas-list">
+                        <li>Downtown Business District</li>
+                        <li>Residential Areas</li>
+                        <li>Industrial Zones</li>
+                        <li>Construction Sites</li>
+                        <li>Landscaping Projects</li>
+                        <li>Waste Management Facilities</li>
+                    </ul>
+                    <p class="note">* Contact us to confirm service availability in your specific location.</p>
+                </div>
+            </section>
+
+            <!-- Emergency Contact -->
+            <section class="emergency-section">
+                <div class="emergency-content">
+                    <h2 class="emergency-title">Emergency Service</h2>
+                    <p class="emergency-text">For urgent service requests or emergency situations, please call our 24/7 hotline:</p>
+                    <div class="emergency-phone">
+                        <span class="emergency-number">+1 (555) 123-4569</span>
+                    </div>
+                    <p class="emergency-note">Our emergency response team is available 24/7 to handle urgent transportation needs.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dump Truck Services. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 

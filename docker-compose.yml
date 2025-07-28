@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - DATABASE_URL=jdbc:mysql://db:3306/dump_truck_prod?useSSL=false&allowPublicKeyRetrieval=true
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=your_secure_password_here
+      - MAIL_HOST=smtp-relay.brevo.com
+      - MAIL_PORT=587
+      - MAIL_USERNAME=your_email_username
+      - MAIL_PASSWORD=your_email_password
+      - APP_EMAIL_FROM=your_from_email
+      - APP_VERIFICATION_URL=https://yourdomain.com/verify
+    depends_on:
+      - db
+    volumes:
+      - ./logs:/app/logs
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ROOT_PASSWORD=your_secure_password_here
+      - MYSQL_DATABASE=dump_truck_prod
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql_data: 

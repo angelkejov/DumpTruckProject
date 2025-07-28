@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Service - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-brand">
+                    <a th:href="@{/}" class="brand-link">
+                        <span class="brand-text">Dump Truck Services</span>
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a th:href="@{/}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/order}" class="nav-link">Order Service</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/contact}" class="nav-link">Contact</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/login}" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a th:href="@{/register}" class="nav-link nav-link-primary">Register</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a th:href="@{/profile}" class="nav-link">Profile</a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post" class="logout-form">
+                            <button type="submit" class="nav-link nav-link-logout">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- Flash Messages -->
+            <div th:if="${success}" class="alert alert-success" role="alert">
+                <span th:text="${success}"></span>
+            </div>
+            <div th:if="${error}" class="alert alert-error" role="alert">
+                <span th:text="${error}"></span>
+            </div>
+            
+            <!-- Order Form -->
+            <section class="order-section">
+                <div class="order-container">
+                    <div class="order-header">
+                        <h1 class="order-title">Request Service</h1>
+                        <p class="order-subtitle">Fill out the form below to request our dump truck services</p>
+                    </div>
+                    
+                    <form th:action="@{/order}" th:object="${serviceOrderDto}" method="post" class="order-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pickupLocation" class="form-label">Pickup Address *</label>
+                                <input type="text" id="pickupLocation" th:field="*{pickupLocation}" class="form-input" required>
+                                <span th:if="${#fields.hasErrors('pickupLocation')}" class="form-error" th:errors="*{pickupLocation}"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="dropoffLocation" class="form-label">Drop-off Address *</label>
+                                <input type="text" id="dropoffLocation" th:field="*{dropoffLocation}" class="form-input" required>
+                                <span th:if="${#fields.hasErrors('dropoffLocation')}" class="form-error" th:errors="*{dropoffLocation}"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="preferredDateTime" class="form-label">Preferred Date & Time *</label>
+                                <input type="datetime-local" id="preferredDateTime" th:field="*{preferredDateTime}" class="form-input" required>
+                                <span th:if="${#fields.hasErrors('preferredDateTime')}" class="form-error" th:errors="*{preferredDateTime}"></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="materialType" class="form-label">Type of Material *</label>
+                                <select id="materialType" th:field="*{materialType}" class="form-input" required>
+                                    <option value="">Select material type</option>
+                                    <option value="Construction Debris">Construction Debris</option>
+                                    <option value="Soil">Soil</option>
+                                    <option value="Gravel">Gravel</option>
+                                    <option value="Sand">Sand</option>
+                                    <option value="Mulch">Mulch</option>
+                                    <option value="Concrete">Concrete</option>
+                                    <option value="Asphalt">Asphalt</option>
+                                    <option value="Wood">Wood</option>
+                                    <option value="Metal">Metal</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span th:if="${#fields.hasErrors('materialType')}" class="form-error" th:errors="*{materialType}"></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes" class="form-label">Additional Notes (Optional)</label>
+                            <textarea id="notes" th:field="*{notes}" class="form-textarea" rows="4" placeholder="Please provide any additional details about your service request..."></textarea>
+                            <span th:if="${#fields.hasErrors('notes')}" class="form-error" th:errors="*{notes}"></span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-full">Submit Request</button>
+                        </div>
+                    </form>
+                    
+                    <div class="order-info">
+                        <h3 class="info-title">Service Information</h3>
+                        <ul class="info-list">
+                            <li>Our trucks have a capacity of up to 3.5 tons</li>
+                            <li>We operate Monday to Saturday, 7:00 AM - 6:00 PM</li>
+                            <li>Emergency services available 24/7</li>
+                            <li>We'll contact you within 24 hours to confirm your request</li>
+                            <li>Payment terms will be discussed during confirmation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Dump Truck Services. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
