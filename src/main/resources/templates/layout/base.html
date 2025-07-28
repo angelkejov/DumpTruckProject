@@ -16,6 +16,11 @@
                         <span class="brand-text" data-en="TRANSPORT GROUP 25" data-bg="ТРАНСПОРТ ГРУП 25">ТРАНСПОРТ ГРУП 25</span>
                     </a>
                 </div>
+                <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a th:href="@{/}" class="nav-link" data-en="Home" data-bg="Начало">Начало</a>
@@ -40,11 +45,10 @@
                             <button type="submit" class="nav-link nav-link-logout" data-en="Logout" data-bg="Изход">Изход</button>
                         </form>
                     </li>
-                    <li class="nav-item">
-                        <button class="nav-link language-toggle" onclick="toggleLanguage()">
-                            <span class="lang-text" data-en="BG" data-bg="EN">EN</span>
-                        </button>
-                    </li>
+                </ul>
+                <button class="language-toggle" onclick="toggleLanguage()">
+                    <span class="lang-text" data-en="BG" data-bg="EN">EN</span>
+                </button>
                 </ul>
             </div>
         </nav>
@@ -180,6 +184,15 @@
             } else {
                 document.title = title.replace('TRANSPORT GROUP 25', 'ТРАНСПОРТ ГРУП 25');
             }
+        }
+        
+        // Mobile menu toggle functionality
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const mobileToggle = document.querySelector('.mobile-menu-toggle');
+            
+            navMenu.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
         }
         
         // Initialize language on page load
