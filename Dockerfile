@@ -7,10 +7,8 @@ WORKDIR /app
 # Install necessary packages
 RUN apk add --no-cache curl
 
-# Copy Maven wrapper and pom.xml
-COPY .mvn/ .mvn/
-COPY mvnw .
-COPY pom.xml .
+# Copy the entire project (excluding target and .git)
+COPY . .
 
 # Make mvnw executable
 RUN chmod +x mvnw
@@ -19,9 +17,6 @@ RUN chmod +x mvnw
 RUN ./mvnw dependency:go-offline -B || \
     (sleep 10 && ./mvnw dependency:go-offline -B) || \
     (sleep 20 && ./mvnw dependency:go-offline -B)
-
-# Copy source code
-COPY src ./src
 
 # Build the application (with retry mechanism)
 RUN ./mvnw clean package -DskipTests || \

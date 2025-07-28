@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.iml
+*.ipr
+*.iws
+
+# Build artifacts
+target/
+*.jar
+*.war
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Documentation
+README.md
+DEPLOYMENT_GUIDE.md
+PRODUCTION_DEPLOYMENT.md
+RAILWAY_DEPLOYMENT.md
+
+# Deployment configs (not needed in container)
+railway.json
+render.yaml
+docker-compose.yml
+deploy.sh
+env.example 

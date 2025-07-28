@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["jdk17", "maven"]
+
+[phases.install]
+cmds = ["chmod +x mvnw", "chmod +x railway-start.sh", "./mvnw clean package -DskipTests"]
+
+[start]
+cmd = "./railway-start.sh" 

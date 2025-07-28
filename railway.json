@@ -16,5 +16,8 @@
         "SPRING_PROFILES_ACTIVE": "prod"
       }
     }
+  },
+  "variables": {
+    "SPRING_PROFILES_ACTIVE": "prod"
   }
 } 
