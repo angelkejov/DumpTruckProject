@@ -24,8 +24,12 @@ public class EmailConfig {
     private String password;
 
     @Bean
-    @ConditionalOnProperty(name = "spring.mail.username", havingValue = "", matchIfMissing = false)
+    @ConditionalOnProperty(name = "spring.mail.username", havingValue = "", matchIfMissing = true)
     public JavaMailSender javaMailSender() {
+        if (username == null || username.trim().isEmpty()) {
+            return null;
+        }
+        
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(host);
         mailSender.setPort(port);
