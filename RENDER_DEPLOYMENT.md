@@ -1,6 +1,6 @@
 # Render Deployment Guide
 
-This guide will help you deploy your Spring Boot application and MySQL database to Render.
+This guide will help you deploy your Spring Boot application and PostgreSQL database to Render.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ This guide will help you deploy your Spring Boot application and MySQL database 
 ### 1. Database Setup
 
 1. Go to your Render dashboard
-2. Click "New +" and select "MySQL"
+2. Click "New +" and select "PostgreSQL"
 3. Configure the database:
    - **Name**: `shteotkacha-db`
    - **Plan**: Free
@@ -55,9 +55,9 @@ Set the following environment variables in your web service:
 
 After your database is created, you can run the initialization script:
 
-1. Go to your MySQL database in Render
+1. Go to your PostgreSQL database in Render
 2. Click on "Connect" → "External Database"
-3. Use a MySQL client to connect and run the `init_render_db.sql` script
+3. Use a PostgreSQL client to connect and run the `init_postgres_db.sql` script
 
 ### 5. Deploy
 
@@ -89,7 +89,7 @@ Your application includes a health check endpoint at `/api/health` which Render 
 
 The application uses the `render` profile which is configured in `application-render.properties`. This profile:
 
-- Uses MySQL database configuration
+- Uses PostgreSQL database configuration
 - Disables H2 console
 - Configures connection pooling
 - Sets up email configuration

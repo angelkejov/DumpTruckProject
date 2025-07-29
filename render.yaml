@@ -1,6 +1,6 @@
 services:
-  # MySQL Database
-  - type: mysql
+  # PostgreSQL Database
+  - type: pserv
     name: shteotkacha-db
     plan: free
     ipAllowList: []
