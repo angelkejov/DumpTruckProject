@@ -226,21 +226,67 @@ src/
 - Java 17 or higher
 - Maven 3.6 or higher
 - MySQL 8.0 or higher
+- Docker & Docker Compose (optional, for containerized deployment)
 
-### Local Development
-1. **Start MySQL** and create a database
-2. **Configure email settings** in `application.properties`
-3. **Run the application:**
-   ```bash
-   mvn spring-boot:run
-   ```
-4. **Access the application** at `http://localhost:8080`
+### Quick Start
+
+#### Option 1: Using Docker (Recommended)
+```bash
+# Clone the repository
+git clone <repository-url>
+cd dump-truck-services
+
+# Run with Docker Compose
+docker-compose up --build
+
+# Access the application at http://localhost:8080
+```
+
+#### Option 2: Local Development
+```bash
+# Clone the repository
+git clone <repository-url>
+cd dump-truck-services
+
+# Set up environment variables
+cp env.example .env
+# Edit .env with your settings
+
+# Build and run
+mvn clean package -DskipTests
+java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar
+
+# Access the application at http://localhost:8080
+```
+
+#### Option 3: Using Deployment Script
+```bash
+# Make script executable (Linux/macOS)
+chmod +x deploy.sh
+
+# Check prerequisites
+./deploy.sh check
+
+# Build and run
+./deploy.sh run
+```
 
 ### Building for Production
 ```bash
 mvn clean package -DskipTests
 java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar
 ```
+
+## Deployment
+
+For detailed deployment instructions, see [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md).
+
+### Quick Deployment Options
+
+1. **Railway**: Connect your GitHub repository to Railway
+2. **Render**: Connect your GitHub repository to Render
+3. **Heroku**: Use the provided Procfile
+4. **AWS/GCP**: Use the provided configuration files
 
 ## API Endpoints
 

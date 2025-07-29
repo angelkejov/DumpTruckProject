@@ -105,5 +105,4 @@ logs/
 ehthumbs.db
 Thumbs.db
 
-# Heroku
-.env.heroku 
+ 

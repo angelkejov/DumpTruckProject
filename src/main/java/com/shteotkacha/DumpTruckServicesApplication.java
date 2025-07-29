@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DumpTruckServicesApplication {
 
     public static void main(String[] args) {
+        // Force rebuild to remove H2 dependency
         SpringApplication.run(DumpTruckServicesApplication.class, args);
     }
 } 
