@@ -6,36 +6,23 @@
 .idea
 .vscode
 *.iml
-*.ipr
-*.iws
 
-# Build artifacts
+# Maven
 target/
-*.jar
-*.war
-
-# Logs
-logs/
-*.log
+!target/dump-truck-services-0.0.1-SNAPSHOT.jar
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Environment files
-.env
-.env.local
-.env.production
+# Logs
+*.log
 
 # Documentation
 README.md
-DEPLOYMENT_GUIDE.md
-PRODUCTION_DEPLOYMENT.md
-RAILWAY_DEPLOYMENT.md
+*.md
 
-# Deployment configs (not needed in container)
-railway.json
-render.yaml
-docker-compose.yml
-deploy.sh
-env.example 
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore 
