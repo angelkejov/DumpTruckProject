@@ -3,7 +3,6 @@ services:
   - type: pserv
     name: shteotkacha-db
     plan: free
-    ipAllowList: []
     
   # Web Service
   - type: web
