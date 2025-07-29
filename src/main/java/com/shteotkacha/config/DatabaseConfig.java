@@ -15,8 +15,14 @@ public class DatabaseConfig {
     @Bean
     @ConditionalOnProperty(name = "spring.datasource.url", havingValue = ".*mysql.*", matchIfMissing = false)
     public DataSource dataSource() {
+        String mysqlUrl = System.getenv("MYSQL_URL");
+        // Ensure the URL starts with jdbc:mysql://
+        if (mysqlUrl != null && !mysqlUrl.startsWith("jdbc:")) {
+            mysqlUrl = "jdbc:" + mysqlUrl;
+        }
+        
         return DataSourceBuilder.create()
-                .url(System.getenv("MYSQL_URL"))
+                .url(mysqlUrl)
                 .username(System.getenv("MYSQLUSER"))
                 .password(System.getenv("MYSQLPASSWORD"))
                 .driverClassName("com.mysql.cj.jdbc.Driver")
