@@ -1,0 +1,41 @@
+services:
+  # MySQL Database
+  - type: mysql
+    name: shteotkacha-db
+    plan: free
+    ipAllowList: []
+    
+  # Web Service
+  - type: web
+    name: shteotkacha-app
+    env: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /api/health
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: DATABASE_URL
+        fromDatabase:
+          name: shteotkacha-db
+          property: connectionString
+      - key: DB_USERNAME
+        fromDatabase:
+          name: shteotkacha-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: shteotkacha-db
+          property: password
+      - key: MAIL_HOST
+        value: smtp-relay.brevo.com
+      - key: MAIL_PORT
+        value: 587
+      - key: MAIL_USERNAME
+        sync: false
+      - key: MAIL_PASSWORD
+        sync: false
+      - key: APP_EMAIL_FROM
+        value: anikejov003@gmail.com
+      - key: APP_URL
+        value: https://shteotkacha-app.onrender.com 

@@ -1,4 +1,4 @@
--- Initialize Railway MySQL Database for Dump Truck Services
+-- Initialize Render MySQL Database for Dump Truck Services
 -- This script creates the necessary tables for the application
 
 -- Create users table
