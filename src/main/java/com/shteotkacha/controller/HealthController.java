@@ -61,7 +61,12 @@ public class HealthController {
         env.put("MYSQLUSER", System.getenv("MYSQLUSER"));
         env.put("MYSQLPASSWORD", System.getenv("MYSQLPASSWORD") != null ? "***" : null);
         env.put("MYSQLDATABASE", System.getenv("MYSQLDATABASE"));
+        env.put("MYSQL_URL", System.getenv("MYSQL_URL"));
         env.put("SPRING_PROFILES_ACTIVE", System.getenv("SPRING_PROFILES_ACTIVE"));
+        env.put("DATABASE_URL", System.getenv("DATABASE_URL"));
+        env.put("ALL_ENV_VARS", String.join(", ", System.getenv().keySet().stream()
+                .filter(key -> key.contains("MYSQL") || key.contains("DATABASE"))
+                .collect(java.util.stream.Collectors.toList())));
         return ResponseEntity.ok(env);
     }
 } 
