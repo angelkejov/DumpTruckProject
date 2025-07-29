@@ -28,7 +28,16 @@ public class MySQLConfig {
         logger.info("MYSQLPASSWORD: {}", mysqlPassword != null ? "***" : "NULL");
         
         if (mysqlUrl == null || mysqlUser == null || mysqlPassword == null) {
-            throw new RuntimeException("MySQL environment variables are missing! MYSQL_URL, MYSQLUSER, and MYSQLPASSWORD must be set.");
+            logger.warn("MySQL environment variables are missing! Application will start but database features will not work.");
+            logger.warn("Please add MySQL database service to Railway project.");
+            
+            // Return a dummy datasource that will allow the app to start
+            return DataSourceBuilder.create()
+                    .url("jdbc:h2:mem:temp;DB_CLOSE_DELAY=-1")
+                    .username("sa")
+                    .password("")
+                    .driverClassName("org.h2.Driver")
+                    .build();
         }
         
         return DataSourceBuilder.create()

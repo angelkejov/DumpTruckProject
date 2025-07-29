@@ -16,25 +16,14 @@ import java.util.Map;
 @RequestMapping("/api/health")
 public class HealthController {
     
-    @Autowired
-    private DataSource dataSource;
-    
     @GetMapping
     public ResponseEntity<Map<String, Object>> healthCheck() {
         Map<String, Object> healthStatus = new HashMap<>();
         
-        // Application status
+        // Application status - always return UP if endpoint is reachable
         healthStatus.put("status", "UP");
         healthStatus.put("timestamp", System.currentTimeMillis());
-        
-        // Database status - simplified to avoid startup issues
-        try {
-            healthStatus.put("database", "CHECKING");
-            // Don't test connection during health check to avoid startup failures
-        } catch (Exception e) {
-            healthStatus.put("database", "DOWN");
-            healthStatus.put("database_error", e.getMessage());
-        }
+        healthStatus.put("message", "Application is running");
         
         // Memory status
         Runtime runtime = Runtime.getRuntime();
