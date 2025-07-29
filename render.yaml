@@ -1,8 +1,9 @@
 services:
   # PostgreSQL Database
-  - type: pserv
+  - type: postgresql
     name: shteotkacha-db
     plan: free
+    region: oregon
     
   # Web Service
   - type: web
