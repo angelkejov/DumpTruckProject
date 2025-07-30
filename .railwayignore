@@ -1,0 +1,38 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.iml
+
+# Maven
+target/
+!target/dump-truck-services-0.0.1-SNAPSHOT.jar
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Documentation
+README.md
+*.md
+
+# Docker
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Railway specific
+.railwayignore
+railway.json
+railway.toml
+
+# Development files
+init_mysql_db.sql
+deploy.bat
+RAILWAY_DEPLOYMENT.md 

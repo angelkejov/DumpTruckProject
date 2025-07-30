@@ -2,8 +2,11 @@ package com.shteotkacha;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.SystemMetricsAutoConfiguration;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = {
+    SystemMetricsAutoConfiguration.class
+})
 public class DumpTruckServicesApplication {
 
     public static void main(String[] args) {
