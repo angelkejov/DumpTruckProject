@@ -16,8 +16,9 @@ public class StartupConfig {
     @EventListener(ApplicationReadyEvent.class)
     public void onApplicationReady() {
         logger.info("🚀 Application started successfully in Railway environment");
-        logger.info("📊 Health check available at: /actuator/health");
+        logger.info("📊 Health check available at: /api/health");
         logger.info("🔍 Environment variables available at: /api/env");
         logger.info("🌐 Application ready to serve requests");
+        logger.info("🔧 Database status: " + (System.getenv("MYSQL_URL") != null ? "MySQL configured" : "Using H2 fallback"));
     }
 } 

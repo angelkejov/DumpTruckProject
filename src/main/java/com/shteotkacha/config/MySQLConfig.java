@@ -59,14 +59,11 @@ public class MySQLConfig {
         logger.info("PROD_DB_PASSWORD: {}", System.getenv("PROD_DB_PASSWORD") != null ? "***" : "NULL");
         
         if (mysqlUrl == null || mysqlUser == null || mysqlPassword == null) {
-            logger.warn("MySQL environment variables are missing! Application will start with limited functionality.");
-            logger.warn("Please add MySQL database service to Railway project.");
-            logger.warn("Expected variables: MYSQL_URL/MYSQLUSER/MYSQLPASSWORD or DATABASE_URL/DB_USERNAME/DB_PASSWORD or PROD_DB_* variables");
+            logger.warn("MySQL environment variables are missing! Using minimal H2 fallback.");
             
             // Return a minimal datasource to allow the app to start
-            // This will allow health checks to work while database features are disabled
             return DataSourceBuilder.create()
-                    .url("jdbc:h2:mem:temp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE")
+                    .url("jdbc:h2:mem:temp;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MySQL")
                     .username("sa")
                     .password("")
                     .driverClassName("org.h2.Driver")

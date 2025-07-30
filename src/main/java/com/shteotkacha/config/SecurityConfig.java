@@ -22,7 +22,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/", "/home", "/contact", "/register", "/login", "/verify", "/css/**", "/images/**").permitAll()
-                .requestMatchers("/api/health", "/api/env", "/actuator/health", "/actuator/info").permitAll()
+                .requestMatchers("/api/health", "/api/env", "/api/ping", "/actuator/health", "/actuator/info").permitAll()
                 .requestMatchers("/order", "/profile").authenticated()
                 .anyRequest().authenticated()
             )

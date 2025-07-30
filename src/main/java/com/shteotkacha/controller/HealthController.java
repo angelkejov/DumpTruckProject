@@ -25,6 +25,11 @@ public class HealthController {
         health.put("version", "1.0.0");
         return health;
     }
+    
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong";
+    }
 
     @GetMapping("/env")
     public Map<String, String> environmentVariables() {
