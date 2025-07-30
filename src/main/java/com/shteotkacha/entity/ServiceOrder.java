@@ -43,7 +43,7 @@ public class ServiceOrder {
     private String notes;
     
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(20)")
     private OrderStatus status = OrderStatus.PENDING;
     
     @Column(name = "created_at")

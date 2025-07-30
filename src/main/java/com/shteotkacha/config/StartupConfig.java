@@ -2,23 +2,22 @@ package com.shteotkacha.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
+import org.springframework.context.event.EventListener;
 
-@Component
+@Configuration
 @Profile("railway")
-public class StartupConfig implements CommandLineRunner {
+public class StartupConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(StartupConfig.class);
 
-    @Override
-    public void run(String... args) throws Exception {
-        logger.info("=== APPLICATION STARTUP COMPLETE ===");
-        logger.info("Application is ready to accept requests");
-        logger.info("Health check available at: /api/health");
-        logger.info("Environment: {}", System.getenv("SPRING_PROFILES_ACTIVE"));
-        logger.info("Port: {}", System.getenv("PORT"));
-        logger.info("=== END STARTUP ===");
+    @EventListener(ApplicationReadyEvent.class)
+    public void onApplicationReady() {
+        logger.info("🚀 Application started successfully in Railway environment");
+        logger.info("📊 Health check available at: /actuator/health");
+        logger.info("🔍 Environment variables available at: /api/env");
+        logger.info("🌐 Application ready to serve requests");
     }
 } 

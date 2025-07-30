@@ -1,61 +1,77 @@
 package com.shteotkacha.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/health")
+@RequestMapping("/api")
 public class HealthController {
-    
-    @GetMapping
-    public ResponseEntity<Map<String, Object>> healthCheck() {
-        Map<String, Object> healthStatus = new HashMap<>();
-        
-        // Application status - always return UP if endpoint is reachable
-        healthStatus.put("status", "UP");
-        healthStatus.put("timestamp", System.currentTimeMillis());
-        healthStatus.put("message", "Application is running");
-        
-        // Memory status
-        Runtime runtime = Runtime.getRuntime();
-        Map<String, Object> memory = new HashMap<>();
-        memory.put("total", runtime.totalMemory());
-        memory.put("free", runtime.freeMemory());
-        memory.put("used", runtime.totalMemory() - runtime.freeMemory());
-        memory.put("max", runtime.maxMemory());
-        healthStatus.put("memory", memory);
-        
-        return ResponseEntity.ok(healthStatus);
+
+    @Autowired
+    private Environment environment;
+
+    @GetMapping("/health")
+    public Map<String, Object> health() {
+        Map<String, Object> health = new HashMap<>();
+        health.put("status", "UP");
+        health.put("timestamp", System.currentTimeMillis());
+        return health;
     }
-    
-    @GetMapping("/ping")
-    public ResponseEntity<String> ping() {
-        return ResponseEntity.ok("pong");
-    }
-    
+
     @GetMapping("/env")
-    public ResponseEntity<Map<String, String>> environmentCheck() {
+    public Map<String, String> environmentVariables() {
         Map<String, String> env = new HashMap<>();
-        env.put("MYSQLHOST", System.getenv("MYSQLHOST"));
-        env.put("MYSQLPORT", System.getenv("MYSQLPORT"));
-        env.put("MYSQLUSER", System.getenv("MYSQLUSER"));
-        env.put("MYSQLPASSWORD", System.getenv("MYSQLPASSWORD") != null ? "***" : null);
-        env.put("MYSQLDATABASE", System.getenv("MYSQLDATABASE"));
+        
+        // Database related environment variables
         env.put("MYSQL_URL", System.getenv("MYSQL_URL"));
-        env.put("SPRING_PROFILES_ACTIVE", System.getenv("SPRING_PROFILES_ACTIVE"));
         env.put("DATABASE_URL", System.getenv("DATABASE_URL"));
-        env.put("ALL_ENV_VARS", String.join(", ", System.getenv().keySet().stream()
-                .filter(key -> key.contains("MYSQL") || key.contains("DATABASE"))
-                .collect(java.util.stream.Collectors.toList())));
-        return ResponseEntity.ok(env);
+        env.put("PROD_DB_HOST", System.getenv("PROD_DB_HOST"));
+        env.put("PROD_DB_PORT", System.getenv("PROD_DB_PORT"));
+        env.put("PROD_DB_NAME", System.getenv("PROD_DB_NAME"));
+        env.put("MYSQLUSER", System.getenv("MYSQLUSER"));
+        env.put("DB_USERNAME", System.getenv("DB_USERNAME"));
+        env.put("PROD_DB_USERNAME", System.getenv("PROD_DB_USERNAME"));
+        env.put("MYSQLPASSWORD", System.getenv("MYSQLPASSWORD") != null ? "***" : null);
+        env.put("DB_PASSWORD", System.getenv("DB_PASSWORD") != null ? "***" : null);
+        env.put("PROD_DB_PASSWORD", System.getenv("PROD_DB_PASSWORD") != null ? "***" : null);
+        
+        // Application environment variables
+        env.put("SPRING_PROFILES_ACTIVE", environment.getProperty("spring.profiles.active"));
+        env.put("PORT", System.getenv("PORT"));
+        
+        // Email related environment variables
+        env.put("MAIL_USERNAME", System.getenv("MAIL_USERNAME"));
+        env.put("MAIL_PASSWORD", System.getenv("MAIL_PASSWORD") != null ? "***" : null);
+        env.put("APP_EMAIL_FROM", System.getenv("APP_EMAIL_FROM"));
+        env.put("APP_URL", System.getenv("APP_URL"));
+        
+        // Add database connection status
+        String mysqlUrl = System.getenv("MYSQL_URL") != null ? System.getenv("MYSQL_URL") : 
+                         System.getenv("DATABASE_URL") != null ? System.getenv("DATABASE_URL") :
+                         System.getenv("PROD_DB_HOST") != null ? 
+                             "jdbc:mysql://" + System.getenv("PROD_DB_HOST") + ":" + 
+                             (System.getenv("PROD_DB_PORT") != null ? System.getenv("PROD_DB_PORT") : "3306") + 
+                             "/" + (System.getenv("PROD_DB_NAME") != null ? System.getenv("PROD_DB_NAME") : "railway") : null;
+        
+        String mysqlUser = System.getenv("MYSQLUSER") != null ? System.getenv("MYSQLUSER") :
+                          System.getenv("DB_USERNAME") != null ? System.getenv("DB_USERNAME") :
+                          System.getenv("PROD_DB_USERNAME") != null ? System.getenv("PROD_DB_USERNAME") : "root";
+        
+        String mysqlPassword = System.getenv("MYSQLPASSWORD") != null ? System.getenv("MYSQLPASSWORD") :
+                              System.getenv("DB_PASSWORD") != null ? System.getenv("DB_PASSWORD") :
+                              System.getenv("PROD_DB_PASSWORD") != null ? System.getenv("PROD_DB_PASSWORD") : null;
+        
+        env.put("DB_CONNECTION_STATUS", (mysqlUrl != null && mysqlUser != null && mysqlPassword != null) ? "READY" : "MISSING_VARIABLES");
+        env.put("DB_URL_DETECTED", mysqlUrl != null ? "YES" : "NO");
+        env.put("DB_USER_DETECTED", mysqlUser != null ? "YES" : "NO");
+        env.put("DB_PASSWORD_DETECTED", mysqlPassword != null ? "YES" : "NO");
+        
+        return env;
     }
 } 
