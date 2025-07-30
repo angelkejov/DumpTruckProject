@@ -26,16 +26,20 @@ public class ServiceOrderDto {
     @Size(max = 1000, message = "Notes must not exceed 1000 characters")
     private String notes;
     
+    @Size(max = 20, message = "Phone number must not exceed 20 characters")
+    private String phoneNumber;
+    
     // Constructors
     public ServiceOrderDto() {}
     
     public ServiceOrderDto(String pickupLocation, String dropoffLocation, 
-                          LocalDateTime preferredDateTime, String materialType, String notes) {
+                          LocalDateTime preferredDateTime, String materialType, String notes, String phoneNumber) {
         this.pickupLocation = pickupLocation;
         this.dropoffLocation = dropoffLocation;
         this.preferredDateTime = preferredDateTime;
         this.materialType = materialType;
         this.notes = notes;
+        this.phoneNumber = phoneNumber;
     }
     
     // Getters and Setters
@@ -77,5 +81,13 @@ public class ServiceOrderDto {
     
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 } 

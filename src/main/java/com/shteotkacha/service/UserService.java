@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -36,7 +37,11 @@ public class UserService implements UserDetailsService {
     }
     
     public User registerUser(String name, String email, String password, String phoneNumber) {
-        logger.info("Starting user registration for email: {}", email);
+        return registerUser(name, email, password, phoneNumber, "USER");
+    }
+    
+    public User registerUser(String name, String email, String password, String phoneNumber, String role) {
+        logger.info("Starting user registration for email: {} with role: {}", email, role);
         
         if (userRepository.existsByEmail(email)) {
             logger.warn("Email already registered: {}", email);
@@ -48,23 +53,28 @@ public class UserService implements UserDetailsService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setPhoneNumber(phoneNumber);
-        user.setVerified(false);
+        user.setRole(role);
+        user.setVerified(role.equals("ADMIN")); // Admin users are automatically verified
         
-        // Generate verification code (6-digit number)
-        String verificationCode = String.format("%06d", new Random().nextInt(1000000));
-        user.setVerificationCode(verificationCode);
-        user.setVerificationCodeExpiry(LocalDateTime.now().plusHours(24));
+        // Generate verification code (6-digit number) only for non-admin users
+        if (!role.equals("ADMIN")) {
+            String verificationCode = String.format("%06d", new Random().nextInt(1000000));
+            user.setVerificationCode(verificationCode);
+            user.setVerificationCodeExpiry(LocalDateTime.now().plusHours(24));
+        }
         
         logger.info("Attempting to save user to database: {}", email);
         User savedUser = userRepository.save(user);
         logger.info("User saved successfully with ID: {}", savedUser.getId());
         
-        // Send verification email
-        try {
-            emailService.sendVerificationEmail(savedUser);
-            logger.info("Verification email sent successfully");
-        } catch (Exception e) {
-            logger.error("Failed to send verification email: {}", e.getMessage());
+        // Send verification email only for non-admin users
+        if (!role.equals("ADMIN")) {
+            try {
+                emailService.sendVerificationEmail(savedUser);
+                logger.info("Verification email sent successfully");
+            } catch (Exception e) {
+                logger.error("Failed to send verification email: {}", e.getMessage());
+            }
         }
         
         return savedUser;
@@ -90,11 +100,20 @@ public class UserService implements UserDetailsService {
         return true;
     }
     
+    public User createAdminUser(String name, String email, String password, String phoneNumber) {
+        logger.info("Creating admin user: {}", email);
+        return registerUser(name, email, password, phoneNumber, "ADMIN");
+    }
+    
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
     }
     
     public User findById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+    
+    public List<User> getAllUsers() {
+        return userRepository.findAllByOrderByCreatedAtDesc();
     }
 } 

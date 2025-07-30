@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Statistics - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .chart-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .chart-placeholder {
+            text-align: center;
+            color: #666;
+        }
+        
+        .chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .status-pending { background: #fff3cd; }
+        .status-confirmed { background: #d1ecf1; }
+        .status-in-progress { background: #d4edda; }
+        .status-completed { background: #c3e6cb; }
+        .status-cancelled { background: #f8d7da; }
+        
+        .material-1 { background: #667eea; }
+        .material-2 { background: #764ba2; }
+        .material-3 { background: #f093fb; }
+        .material-4 { background: #f5576c; }
+        .material-5 { background: #4facfe; }
+        .material-6 { background: #00f2fe; }
+        .material-7 { background: #43e97b; }
+        .material-8 { background: #38f9d7; }
+        .material-9 { background: #fa709a; }
+        .material-10 { background: #fee140; }
+        
+        .recent-activity {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .activity-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .activity-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .activity-order {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .activity-date {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .activity-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-data {
+            text-align: center;
+            color: #666;
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        
+        <div class="admin-header">
+            <h1 class="admin-title">Business Analytics</h1>
+            <p class="admin-subtitle">Track your business performance and insights</p>
+        </div>
+        
+        <!-- Overview Statistics -->
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalOrders}">0</div>
+                <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalCustomers}">0</div>
+                <div class="stat-label">Total Customers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${ordersByStatus.get('COMPLETED') ?: 0}">0</div>
+                <div class="stat-label">Completed Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${ordersByStatus.get('PENDING') ?: 0}">0</div>
+                <div class="stat-label">Pending Orders</div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <!-- Orders by Status -->
+            <div class="chart-card">
+                <h3 class="chart-title">Orders by Status</h3>
+                <div class="chart-container">
+                    <div th:if="${ordersByStatus.empty}" class="chart-placeholder">
+                        <h4>No data available</h4>
+                        <p>Start receiving orders to see statistics</p>
+                    </div>
+                    <div th:unless="${ordersByStatus.empty}" class="chart-placeholder">
+                        <h4>Orders by Status</h4>
+                        <div class="chart-legend">
+                            <div th:each="entry : ${ordersByStatus}" class="legend-item">
+                                <div class="legend-color" th:class="${'status-' + entry.key.name().toLowerCase()}"></div>
+                                <span th:text="${entry.key.displayName + ': ' + entry.value}">Pending: 5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orders by Material Type -->
+            <div class="chart-card">
+                <h3 class="chart-title">Orders by Material Type</h3>
+                <div class="chart-container">
+                    <div th:if="${ordersByMaterial.empty}" class="chart-placeholder">
+                        <h4>No data available</h4>
+                        <p>Start receiving orders to see statistics</p>
+                    </div>
+                    <div th:unless="${ordersByMaterial.empty}" class="chart-placeholder">
+                        <h4>Orders by Material</h4>
+                        <div class="chart-legend">
+                            <div th:each="entry, iterStat : ${ordersByMaterial}" class="legend-item">
+                                <div class="legend-color" th:class="${'material-' + (iterStat.index + 1)}"></div>
+                                <span th:text="${entry.key + ': ' + entry.value}">Construction Debris: 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <h3 class="activity-title">Recent Orders</h3>
+            <div th:if="${recentOrders.empty}" class="no-data">
+                <h4>No recent orders</h4>
+                <p>No orders have been placed recently.</p>
+            </div>
+            <div th:each="order : ${recentOrders}" class="activity-item">
+                <div class="activity-header">
+                    <span class="activity-order" th:text="'Order #' + ${order.id}">Order #123</span>
+                    <span class="activity-date" th:text="${#temporals.format(order.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 10:00</span>
+                </div>
+                <div class="activity-details">
+                    <div th:text="${order.user.name + ' - ' + order.pickupLocation + ' → ' + order.dropoffLocation}">Customer Name - Pickup → Dropoff</div>
+                    <div th:text="${'Material: ' + order.materialType + ' | Status: ' + order.status.displayName}">Material: Construction Debris | Status: Pending</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

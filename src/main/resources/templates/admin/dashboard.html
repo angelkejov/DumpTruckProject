@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .admin-nav {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .admin-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .admin-nav-item {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-nav-item:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .recent-orders {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .recent-orders h3 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .order-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #667eea;
+        }
+        
+        .order-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-in-progress {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background: #c3e6cb;
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .order-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .order-customer {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/" class="back-link">← Back to Main Site</a>
+        
+        <div class="admin-header">
+            <h1 class="admin-title">Admin Dashboard</h1>
+            <p class="admin-subtitle">Manage your dump truck services business</p>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalOrders}">0</div>
+                <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${pendingOrders}">0</div>
+                <div class="stat-label">Pending Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${completedOrders}">0</div>
+                <div class="stat-label">Completed Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" th:text="${totalCustomers}">0</div>
+                <div class="stat-label">Total Customers</div>
+            </div>
+        </div>
+        
+        <!-- Admin Navigation -->
+        <div class="admin-nav">
+            <div class="admin-nav-grid">
+                <a href="/admin/orders" class="admin-nav-item">
+                    <h3>📋 Orders</h3>
+                    <p>Manage all service orders</p>
+                </a>
+                <a href="/admin/customers" class="admin-nav-item">
+                    <h3>👥 Customers</h3>
+                    <p>View customer information</p>
+                </a>
+                <a href="/admin/stats" class="admin-nav-item">
+                    <h3>📊 Statistics</h3>
+                    <p>Business analytics & reports</p>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Recent Orders -->
+        <div class="recent-orders">
+            <h3>Recent Orders</h3>
+            <div th:if="${recentOrders.empty}" class="no-orders">
+                <p>No orders yet.</p>
+            </div>
+            <div th:each="order : ${recentOrders}" class="order-item">
+                <div class="order-header">
+                    <span class="order-id" th:text="'Order #' + ${order.id}">Order #123</span>
+                    <span class="order-status" th:class="${'status-' + order.status.name().toLowerCase()}" 
+                          th:text="${order.status.displayName}">Pending</span>
+                </div>
+                <div class="order-details">
+                    <div class="order-customer" th:text="${order.user.name}">Customer Name</div>
+                    <div th:text="${order.pickupLocation + ' → ' + order.dropoffLocation}">Pickup → Dropoff</div>
+                    <div th:text="${'Material: ' + order.materialType}">Material: Construction Debris</div>
+                    <div th:text="${'Date: ' + #temporals.format(order.preferredDateTime, 'yyyy-MM-dd HH:mm')}">Date: 2024-01-01 10:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

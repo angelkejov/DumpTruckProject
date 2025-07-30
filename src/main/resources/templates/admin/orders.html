@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Orders - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .filters-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .filters-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .form-input, .form-select {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .orders-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .order-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-in-progress {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background: #c3e6cb;
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .customer-info {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .order-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .status-form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .status-select {
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.9rem;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-orders {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        
+        <div class="admin-header">
+            <h1 class="admin-title">Order Management</h1>
+            <p class="admin-subtitle">Manage and track all service orders</p>
+        </div>
+        
+        <!-- Flash Messages -->
+        <div th:if="${success}" class="alert alert-success" role="alert">
+            <span th:text="${success}"></span>
+        </div>
+        <div th:if="${error}" class="alert alert-error" role="alert">
+            <span th:text="${error}"></span>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filters-section">
+            <form th:action="@{/admin/orders}" method="get" class="filters-form">
+                <div class="form-group">
+                    <label for="status" class="form-label">Filter by Status</label>
+                    <select id="status" name="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option th:each="status : ${orderStatuses}" 
+                                th:value="${status.name()}" 
+                                th:text="${status.displayName}"
+                                th:selected="${status.name() == statusFilter}">Pending</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="search" class="form-label">Search Orders</label>
+                    <input type="text" id="search" name="search" class="form-input" 
+                           th:value="${searchQuery}" placeholder="Search by customer, location, material...">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="/admin/orders" class="btn btn-secondary" style="margin-left: 10px;">Clear</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Orders Table -->
+        <div class="orders-table">
+            <div class="table-header">
+                <h2 class="table-title" th:text="'Orders (' + ${orders.size()} + ')'">Orders (0)</h2>
+            </div>
+            
+            <div th:if="${orders.empty}" class="no-orders">
+                <h3>No orders found</h3>
+                <p>There are no orders matching your criteria.</p>
+            </div>
+            
+            <table th:if="${!orders.empty}" class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Service Details</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${orders}">
+                        <td>
+                            <strong th:text="'#' + ${order.id}">#123</strong>
+                        </td>
+                        <td>
+                            <div class="customer-info" th:text="${order.user.name}">Customer Name</div>
+                            <div class="order-details" th:text="${order.user.email}">customer@email.com</div>
+                            <div class="order-details" th:if="${order.user.phoneNumber}" th:text="${order.user.phoneNumber}">+1 555-123-4567</div>
+                        </td>
+                        <td>
+                            <div class="order-details">
+                                <div><strong>From:</strong> <span th:text="${order.pickupLocation}">Pickup Location</span></div>
+                                <div><strong>To:</strong> <span th:text="${order.dropoffLocation}">Dropoff Location</span></div>
+                                <div><strong>Material:</strong> <span th:text="${order.materialType}">Construction Debris</span></div>
+                                <div th:if="${order.notes}"><strong>Notes:</strong> <span th:text="${order.notes}">Additional notes</span></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="order-status" th:class="${'status-' + order.status.name().toLowerCase()}" 
+                                  th:text="${order.status.displayName}">Pending</span>
+                        </td>
+                        <td>
+                            <div class="order-details">
+                                <div th:text="${#temporals.format(order.preferredDateTime, 'yyyy-MM-dd')}">2024-01-01</div>
+                                <div th:text="${#temporals.format(order.preferredDateTime, 'HH:mm')}">10:00</div>
+                            </div>
+                        </td>
+                        <td>
+                            <form th:action="@{/admin/orders/{orderId}/status(orderId=${order.id})}" 
+                                  method="post" class="status-form">
+                                <select name="status" class="status-select">
+                                    <option th:each="status : ${orderStatuses}" 
+                                            th:value="${status.name()}" 
+                                            th:text="${status.displayName}"
+                                            th:selected="${status == order.status}">Pending</option>
+                                </select>
+                                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

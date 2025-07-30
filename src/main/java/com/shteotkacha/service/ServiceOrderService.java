@@ -51,4 +51,16 @@ public class ServiceOrderService {
         }
         return false;
     }
+    
+    public List<ServiceOrder> getAllOrders() {
+        return serviceOrderRepository.findAllByOrderByCreatedAtDesc();
+    }
+    
+    public List<ServiceOrder> getAllOrdersByStatus(ServiceOrder.OrderStatus status) {
+        return serviceOrderRepository.findByStatusOrderByCreatedAtDesc(status);
+    }
+    
+    public ServiceOrder updateOrder(ServiceOrder order) {
+        return serviceOrderRepository.save(order);
+    }
 } 

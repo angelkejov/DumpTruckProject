@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Customers - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .search-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .search-form {
+            display: flex;
+            gap: 20px;
+            align-items: end;
+        }
+        
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .form-input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #5a6fd8;
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .customers-table {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .table-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        .table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .customer-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .customer-email {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .customer-email:hover {
+            text-decoration: underline;
+        }
+        
+        .customer-phone {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .customer-status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-verified {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-unverified {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .customer-orders {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .view-details {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .view-details:hover {
+            text-decoration: underline;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-customers {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/admin" class="back-link">← Back to Dashboard</a>
+        
+        <div class="admin-header">
+            <h1 class="admin-title">Customer Management</h1>
+            <p class="admin-subtitle">View and manage customer information</p>
+        </div>
+        
+        <!-- Search -->
+        <div class="search-section">
+            <form th:action="@{/admin/customers}" method="get" class="search-form">
+                <div class="form-group">
+                    <label for="search" class="form-label">Search Customers</label>
+                    <input type="text" id="search" name="search" class="form-input" 
+                           th:value="${searchQuery}" placeholder="Search by name, email, or phone...">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <a href="/admin/customers" class="btn btn-secondary" style="margin-left: 10px;">Clear</a>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Customers Table -->
+        <div class="customers-table">
+            <div class="table-header">
+                <h2 class="table-title" th:text="'Customers (' + ${customers.size()} + ')'">Customers (0)</h2>
+            </div>
+            
+            <div th:if="${customers.empty}" class="no-customers">
+                <h3>No customers found</h3>
+                <p>There are no customers matching your search criteria.</p>
+            </div>
+            
+            <table th:if="${!customers.empty}" class="table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Contact Information</th>
+                        <th>Status</th>
+                        <th>Registration Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="customer : ${customers}">
+                        <td>
+                            <div class="customer-name" th:text="${customer.name}">Customer Name</div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href="mailto:" th:href="'mailto:' + ${customer.email}" 
+                                   class="customer-email" th:text="${customer.email}">customer@email.com</a>
+                            </div>
+                            <div th:if="${customer.phoneNumber}" class="customer-phone" 
+                                 th:text="${customer.phoneNumber}">+1 555-123-4567</div>
+                            <div th:unless="${customer.phoneNumber}" class="customer-phone">No phone number</div>
+                        </td>
+                        <td>
+                            <span class="customer-status" 
+                                  th:class="${customer.verified ? 'status-verified' : 'status-unverified'}"
+                                  th:text="${customer.verified ? 'Verified' : 'Unverified'}">Verified</span>
+                        </td>
+                        <td>
+                            <div th:text="${#temporals.format(customer.createdAt, 'yyyy-MM-dd')}">2024-01-01</div>
+                            <div th:text="${#temporals.format(customer.createdAt, 'HH:mm')}">10:00</div>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/customers/{customerId}(customerId=${customer.id})}" 
+                               class="view-details">View Details</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

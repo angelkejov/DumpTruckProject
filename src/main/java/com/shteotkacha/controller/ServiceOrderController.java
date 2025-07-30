@@ -68,7 +68,7 @@ public class ServiceOrderController {
             emailService.sendOrderConfirmationEmail(user, orderDetails);
             
             // Send admin notification
-            emailService.sendAdminOrderNotification(user, order);
+            emailService.sendAdminOrderNotification(user, order, orderDto.getPhoneNumber());
             
             redirectAttributes.addFlashAttribute("success", 
                 "Service order submitted successfully! You will receive a confirmation email shortly.");

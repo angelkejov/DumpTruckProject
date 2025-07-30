@@ -8,6 +8,30 @@ A Spring Boot web application for dump truck service management, deployed on Rai
 - Service order management
 - Email verification
 - Responsive web interface
+- **Admin Dashboard** with full access control
+
+## Admin Access
+
+The application includes a dedicated admin user with full access to the admin dashboard.
+
+### Admin Credentials
+- **Email**: `admin@shteotkacha.com`
+- **Password**: `admin123`
+- **Access URL**: `/admin`
+
+### Admin Dashboard Features
+- **Overview**: Key statistics and business metrics
+- **Order Management**: View, filter, and update order statuses
+- **Customer Management**: View all registered customers and their details
+- **Analytics**: Business statistics and order analytics
+
+### How to Access Admin Dashboard
+1. Start the application: `mvn spring-boot:run`
+2. Go to: `http://localhost:8080/login`
+3. Login with admin credentials
+4. Navigate to: `http://localhost:8080/admin`
+
+**Note**: The admin user is automatically created when the application starts for the first time.
 
 ## Technology Stack
 
@@ -17,6 +41,15 @@ A Spring Boot web application for dump truck service management, deployed on Rai
 - **Security**: Spring Security
 - **Email**: Brevo SMTP
 - **Deployment**: Railway
+
+```properties
+spring_profiles_active=prod
+PROD_DB_HOST=mysql.railway.internal
+PROD_DB_PORT=3306
+PROD_DB_NAME=railway
+PROD_DB_PASSWORD=KSfzpQUuqnZyWGqrvTzjMNmiLuThzEzW
+PROD_DB_USERNAME=root
+
 
 ## Railway Deployment
 

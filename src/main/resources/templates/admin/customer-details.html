@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details - Dump Truck Services</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .admin-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .admin-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .customer-info {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .customer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .customer-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .customer-status {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .status-verified {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-unverified {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .customer-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        
+        .detail-value {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .detail-value a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .detail-value a:hover {
+            text-decoration: underline;
+        }
+        
+        .orders-section {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .orders-header {
+            margin-bottom: 25px;
+        }
+        
+        .orders-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .orders-count {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .orders-table th {
+            background: #f8f9fa;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .orders-table td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+        
+        .orders-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .order-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: inline-block;
+        }
+        
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-confirmed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status-in-progress {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status-completed {
+            background: #c3e6cb;
+            color: #155724;
+        }
+        
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .order-details {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .no-orders {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <a href="/admin/customers" class="back-link">← Back to Customers</a>
+        
+        <div class="admin-header">
+            <h1 class="admin-title">Customer Details</h1>
+            <p class="admin-subtitle">View customer information and order history</p>
+        </div>
+        
+        <!-- Customer Information -->
+        <div class="customer-info">
+            <div class="customer-header">
+                <h2 class="customer-name" th:text="${customer.name}">Customer Name</h2>
+                <span class="customer-status" 
+                      th:class="${customer.verified ? 'status-verified' : 'status-unverified'}"
+                      th:text="${customer.verified ? 'Verified' : 'Unverified'}">Verified</span>
+            </div>
+            
+            <div class="customer-details">
+                <div class="detail-group">
+                    <div class="detail-label">Email Address</div>
+                    <div class="detail-value">
+                        <a href="mailto:" th:href="'mailto:' + ${customer.email}" 
+                           th:text="${customer.email}">customer@email.com</a>
+                    </div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Phone Number</div>
+                    <div class="detail-value" th:if="${customer.phoneNumber}" th:text="${customer.phoneNumber}">+1 555-123-4567</div>
+                    <div class="detail-value" th:unless="${customer.phoneNumber}">Not provided</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Registration Date</div>
+                    <div class="detail-value" th:text="${#temporals.format(customer.createdAt, 'yyyy-MM-dd HH:mm')}">2024-01-01 10:00</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Total Orders</div>
+                    <div class="detail-value" th:text="${customerOrders.size()}">0</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Orders -->
+        <div class="orders-section">
+            <div class="orders-header">
+                <h3 class="orders-title">Order History</h3>
+                <p class="orders-count" th:text="${customerOrders.size()} + ' orders'">0 orders</p>
+            </div>
+            
+            <div th:if="${customerOrders.empty}" class="no-orders">
+                <h4>No orders yet</h4>
+                <p>This customer hasn't placed any orders yet.</p>
+            </div>
+            
+            <table th:if="${!customerOrders.empty}" class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Service Details</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="order : ${customerOrders}">
+                        <td>
+                            <strong th:text="'#' + ${order.id}">#123</strong>
+                        </td>
+                        <td>
+                            <div class="order-details">
+                                <div><strong>From:</strong> <span th:text="${order.pickupLocation}">Pickup Location</span></div>
+                                <div><strong>To:</strong> <span th:text="${order.dropoffLocation}">Dropoff Location</span></div>
+                                <div><strong>Material:</strong> <span th:text="${order.materialType}">Construction Debris</span></div>
+                                <div th:if="${order.notes}"><strong>Notes:</strong> <span th:text="${order.notes}">Additional notes</span></div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="order-status" th:class="${'status-' + order.status.name().toLowerCase()}" 
+                                  th:text="${order.status.displayName}">Pending</span>
+                        </td>
+                        <td>
+                            <div class="order-details">
+                                <div th:text="${#temporals.format(order.preferredDateTime, 'yyyy-MM-dd')}">2024-01-01</div>
+                                <div th:text="${#temporals.format(order.preferredDateTime, 'HH:mm')}">10:00</div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html> 

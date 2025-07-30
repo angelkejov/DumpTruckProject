@@ -13,4 +13,8 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
     List<ServiceOrder> findByUserOrderByCreatedAtDesc(User user);
     
     List<ServiceOrder> findByUserAndStatusOrderByCreatedAtDesc(User user, ServiceOrder.OrderStatus status);
+    
+    List<ServiceOrder> findAllByOrderByCreatedAtDesc();
+    
+    List<ServiceOrder> findByStatusOrderByCreatedAtDesc(ServiceOrder.OrderStatus status);
 } 

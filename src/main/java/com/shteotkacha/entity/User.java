@@ -49,6 +49,9 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
     
+    @Column(name = "role", nullable = false)
+    private String role = "USER";
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
@@ -134,6 +137,14 @@ public class User implements UserDetails {
         this.phoneNumber = phoneNumber;
     }
     
+    public String getRole() {
+        return role;
+    }
+    
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -153,7 +164,7 @@ public class User implements UserDetails {
     // UserDetails implementation
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
     }
     
     @Override

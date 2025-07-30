@@ -61,7 +61,7 @@ public class EmailService {
         mailSender.send(message);
     }
     
-    public void sendAdminOrderNotification(User user, ServiceOrder order) {
+    public void sendAdminOrderNotification(User user, ServiceOrder order, String contactPhoneNumber) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(fromEmail); // Send to admin email (same as from email)
@@ -85,7 +85,7 @@ public class EmailService {
             "Dump Truck Services System",
             user.getName(),
             user.getEmail(),
-            user.getPhoneNumber() != null ? user.getPhoneNumber() : "Not provided",
+            contactPhoneNumber != null ? contactPhoneNumber : "Not provided",
             order.getId(),
             order.getPickupLocation(),
             order.getDropoffLocation(),
