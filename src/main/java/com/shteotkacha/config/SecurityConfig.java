@@ -21,22 +21,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/", "/home", "/contact", "/register", "/login", "/verify", "/css/**", "/images/**").permitAll()
-                .requestMatchers("/api/health", "/api/env", "/api/ping", "/actuator/health", "/actuator/info").permitAll()
-                .requestMatchers("/order", "/profile").authenticated()
-                .anyRequest().authenticated()
+                .requestMatchers("/**").permitAll()
             )
-            .formLogin(form -> form
-                .loginPage("/login")
-                .defaultSuccessUrl("/profile")
-                .failureUrl("/login?error=true")
-                .permitAll()
-            )
-            .logout(logout -> logout
-                .logoutSuccessUrl("/")
-                .permitAll()
-            )
-            .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**"));
+            .csrf(csrf -> csrf.disable());
         
         return http.build();
     }
