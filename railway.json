@@ -6,7 +6,7 @@
   },
   "deploy": {
     "startCommand": "java -jar target/dump-truck-services-0.0.1-SNAPSHOT.jar",
-    "healthcheckPath": "/ping",
+    "healthcheckPath": "/api/ping",
     "healthcheckTimeout": 600,
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
