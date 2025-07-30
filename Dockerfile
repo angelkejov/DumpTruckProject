@@ -33,8 +33,8 @@ USER javauser
 # Expose the port the application runs on
 EXPOSE 8080
 
-# Set default environment variables for Render
-ENV SPRING_PROFILES_ACTIVE=render
+# Set default environment variables for Railway
+ENV SPRING_PROFILES_ACTIVE=railway
 ENV PORT=8080
 
 # Set the default command to run the application

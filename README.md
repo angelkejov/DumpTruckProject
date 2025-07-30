@@ -22,13 +22,39 @@ A Spring Boot web application for dump truck service management, deployed on Rai
 
 This application is configured for deployment on Railway with MySQL database.
 
-### Environment Variables
+### Prerequisites
 
-Railway automatically provides:
-- `MYSQL_URL` - MySQL connection string
-- `MYSQLUSER` - Database username
-- `MYSQLPASSWORD` - Database password
-- `PORT` - Application port
+1. Railway account
+2. MySQL database service on Railway
+3. Environment variables configured
+
+### Deployment Steps
+
+1. **Connect your repository to Railway:**
+   - Go to Railway dashboard
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select your repository
+
+2. **Add MySQL Database:**
+   - In your Railway project, click "New Service" → "Database" → "MySQL"
+   - Railway will automatically provide the database connection variables
+
+3. **Configure Environment Variables:**
+   Railway automatically provides:
+   - `MYSQL_URL` - MySQL connection string
+   - `MYSQLUSER` - Database username
+   - `MYSQLPASSWORD` - Database password
+   - `PORT` - Application port
+
+   **Required custom environment variables:**
+   - `MAIL_USERNAME` - Your Brevo SMTP username
+   - `MAIL_PASSWORD` - Your Brevo SMTP password
+   - `APP_EMAIL_FROM` - Email address for sending emails
+   - `APP_URL` - Your Railway app URL (e.g., https://your-app.railway.app)
+
+4. **Deploy:**
+   - Railway will automatically build and deploy your application
+   - The health check will verify the application is running at `/actuator/health`
 
 ### Database
 
@@ -61,6 +87,36 @@ src/
 │       ├── application.properties
 │       └── application-railway.properties
 ```
+
+## Troubleshooting Railway Deployment
+
+### Common Issues
+
+1. **Build Failures:**
+   - Ensure Java 17 is specified in pom.xml
+   - Check that all dependencies are available
+   - Verify Dockerfile syntax
+
+2. **Database Connection Issues:**
+   - Verify `MYSQL_URL`, `MYSQLUSER`, and `MYSQLPASSWORD` are set
+   - Check that MySQL service is running
+   - Ensure database is accessible from the application
+
+3. **Health Check Failures:**
+   - Verify `/actuator/health` endpoint is accessible
+   - Check application logs for startup errors
+   - Ensure all required environment variables are set
+
+4. **Email Configuration:**
+   - Verify `MAIL_USERNAME` and `MAIL_PASSWORD` are set
+   - Check Brevo SMTP credentials
+   - Ensure `APP_EMAIL_FROM` is configured
+
+### Logs and Monitoring
+
+- View application logs in Railway dashboard
+- Monitor health check status at `/actuator/health`
+- Check database connectivity in logs
 
 ## License
 
