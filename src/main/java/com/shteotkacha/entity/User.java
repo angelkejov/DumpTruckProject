@@ -45,6 +45,10 @@ public class User implements UserDetails {
     @Column(name = "verification_code_expiry")
     private LocalDateTime verificationCodeExpiry;
     
+    @Size(max = 20, message = "Phone number must not exceed 20 characters")
+    @Column(name = "phone_number")
+    private String phoneNumber;
+    
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     
@@ -120,6 +124,14 @@ public class User implements UserDetails {
     
     public void setVerificationCodeExpiry(LocalDateTime verificationCodeExpiry) {
         this.verificationCodeExpiry = verificationCodeExpiry;
+    }
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     public LocalDateTime getCreatedAt() {

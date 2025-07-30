@@ -47,7 +47,7 @@ public class AuthController {
         }
         
         try {
-            userService.registerUser(registrationDto.getName(), registrationDto.getEmail(), registrationDto.getPassword());
+            userService.registerUser(registrationDto.getName(), registrationDto.getEmail(), registrationDto.getPassword(), registrationDto.getPhoneNumber());
             redirectAttributes.addFlashAttribute("success", 
                 "Registration successful! Please check your email for the verification code.");
             return "redirect:/verify";

@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
     
-    public User registerUser(String name, String email, String password) {
+    public User registerUser(String name, String email, String password, String phoneNumber) {
         logger.info("Starting user registration for email: {}", email);
         
         if (userRepository.existsByEmail(email)) {
@@ -47,6 +47,7 @@ public class UserService implements UserDetailsService {
         user.setName(name);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
+        user.setPhoneNumber(phoneNumber);
         user.setVerified(false);
         
         // Generate verification code (6-digit number)

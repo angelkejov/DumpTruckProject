@@ -21,14 +21,18 @@ public class UserRegistrationDto {
     @NotBlank(message = "Password confirmation is required")
     private String confirmPassword;
     
+    @Size(max = 20, message = "Phone number must not exceed 20 characters")
+    private String phoneNumber;
+    
     // Constructors
     public UserRegistrationDto() {}
     
-    public UserRegistrationDto(String name, String email, String password, String confirmPassword) {
+    public UserRegistrationDto(String name, String email, String password, String confirmPassword, String phoneNumber) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.confirmPassword = confirmPassword;
+        this.phoneNumber = phoneNumber;
     }
     
     // Getters and Setters
@@ -62,6 +66,14 @@ public class UserRegistrationDto {
     
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+    
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
     public boolean isPasswordMatching() {
