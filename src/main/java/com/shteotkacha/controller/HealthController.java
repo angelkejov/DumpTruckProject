@@ -21,6 +21,8 @@ public class HealthController {
         Map<String, Object> health = new HashMap<>();
         health.put("status", "UP");
         health.put("timestamp", System.currentTimeMillis());
+        health.put("message", "Application is running");
+        health.put("version", "1.0.0");
         return health;
     }
 
